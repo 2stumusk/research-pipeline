@@ -1,0 +1,15 @@
+market,ticker,name,holding,priority,theme,notes
+CN,300308,中际旭创,false,5,光通信/光模块,核心观察池示例
+CN,300502,新易盛,false,5,光通信/光模块,核心观察池示例
+CN,300394,天孚通信,false,5,光器件/CPO,核心观察池示例
+CN,300570,太辰光,false,4,光器件/CPO,核心观察池示例
+CN,600183,生益科技,false,5,CCL/AI PCB,核心观察池示例
+CN,688183,生益电子,false,5,AI PCB,核心观察池示例
+CN,300476,胜宏科技,false,5,AI PCB,核心观察池示例
+CN,002463,沪电股份,false,5,AI PCB,核心观察池示例
+CN,603986,兆易创新,false,4,存储/MCU,核心观察池示例
+CN,600584,长电科技,false,4,先进封装/封测,核心观察池示例
+CN,002156,通富微电,false,4,先进封装/封测,核心观察池示例
+CN,002028,思源电气,false,4,AI电力/电网,核心观察池示例
+KR,000660.KS,SK海力士,false,4,HBM/DRAM,海外产业锚
+US,NVDA,英伟达,false,5,AI算力/服务器,海外产业锚

@@ -1,0 +1,250 @@
+{
+  "type": "object",
+  "properties": {
+    "executive_view": {
+      "type": "string"
+    },
+    "top_changes": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string"
+          },
+          "why_it_matters": {
+            "type": "string"
+          },
+          "affected_assets": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "direction": {
+            "type": "integer",
+            "minimum": -3,
+            "maximum": 3
+          },
+          "confidence": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 100
+          },
+          "report_ids": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "required": [
+          "title",
+          "why_it_matters",
+          "affected_assets",
+          "direction",
+          "confidence",
+          "report_ids"
+        ],
+        "additionalProperties": false
+      },
+      "maxItems": 7
+    },
+    "risk_alerts": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string"
+          },
+          "why_it_matters": {
+            "type": "string"
+          },
+          "affected_assets": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "direction": {
+            "type": "integer",
+            "minimum": -3,
+            "maximum": 3
+          },
+          "confidence": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 100
+          },
+          "report_ids": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "required": [
+          "title",
+          "why_it_matters",
+          "affected_assets",
+          "direction",
+          "confidence",
+          "report_ids"
+        ],
+        "additionalProperties": false
+      },
+      "maxItems": 7
+    },
+    "earnings_upgrades": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "company": {
+            "type": "string"
+          },
+          "ticker": {
+            "type": "string"
+          },
+          "metric": {
+            "type": "string"
+          },
+          "period": {
+            "type": "string"
+          },
+          "change": {
+            "type": "string"
+          },
+          "report_id": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "company",
+          "ticker",
+          "metric",
+          "period",
+          "change",
+          "report_id"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "earnings_downgrades": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "company": {
+            "type": "string"
+          },
+          "ticker": {
+            "type": "string"
+          },
+          "metric": {
+            "type": "string"
+          },
+          "period": {
+            "type": "string"
+          },
+          "change": {
+            "type": "string"
+          },
+          "report_id": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "company",
+          "ticker",
+          "metric",
+          "period",
+          "change",
+          "report_id"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "biggest_disagreements": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "maxItems": 5
+    },
+    "watchlist_relevance": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "maxItems": 7
+    },
+    "next_7d_catalysts": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "date_or_window": {
+            "type": "string"
+          },
+          "event": {
+            "type": "string"
+          },
+          "affected_assets": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "direction": {
+            "type": "integer",
+            "minimum": -3,
+            "maximum": 3
+          },
+          "page": {
+            "type": [
+              "integer",
+              "null"
+            ]
+          }
+        },
+        "required": [
+          "date_or_window",
+          "event",
+          "affected_assets",
+          "direction",
+          "page"
+        ],
+        "additionalProperties": false
+      },
+      "maxItems": 12
+    },
+    "reading_order": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "maxItems": 15
+    },
+    "data_gaps": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  },
+  "required": [
+    "executive_view",
+    "top_changes",
+    "risk_alerts",
+    "earnings_upgrades",
+    "earnings_downgrades",
+    "biggest_disagreements",
+    "watchlist_relevance",
+    "next_7d_catalysts",
+    "reading_order",
+    "data_gaps"
+  ],
+  "additionalProperties": false
+}

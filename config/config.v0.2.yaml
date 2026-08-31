@@ -1,0 +1,110 @@
+# LLM 配置 (v0.2.0)
+# 这个配置替代了原来的 codex 配置
+
+llm:
+  # Provider: "claude" 或 "openai"
+  provider: "claude"
+
+  # 模型名称 (留空使用默认)
+  # Claude: claude-3-5-sonnet-20241022
+  # OpenAI: gpt-4o-2024-08-06
+  model: ""
+
+  # API Key 环境变量名
+  # Claude: ANTHROPIC_API_KEY
+  # OpenAI: OPENAI_API_KEY
+  api_key_env: "ANTHROPIC_API_KEY"
+
+  # 重试配置
+  max_retries: 3
+  retry_delay: 2.0
+  timeout: 120
+
+  # 推理强度 (仅供参考，实际由 temperature 控制)
+  reasoning_effort:
+    triage: "low"        # 初筛：快速判断
+    synthesis: "medium"  # 综合：中等质量
+    deep_dive: "high"    # 深度：高质量分析
+    qc: "medium"         # 质检：中等质量
+
+  # Temperature 设置 (0.0 = 确定性输出)
+  temperature:
+    triage: 0.0
+    synthesis: 0.0
+    deep_dive: 0.1
+    qc: 0.0
+
+  # Max tokens
+  max_tokens:
+    triage: 4096
+    synthesis: 8192
+    deep_dive: 16384
+    qc: 4096
+
+# 原有配置保持不变
+project:
+  name: "A股研报智能筛选系统"
+  timezone: "Asia/Shanghai"
+  language: "zh-CN"
+
+paths:
+  inbox: "inbox"
+  archive: "archive"
+  extracted: "extracted"
+  database: "database/research.db"
+  outputs: "outputs/daily"
+  logs: "logs"
+  watchlist: "config/watchlist.csv"
+
+pipeline:
+  batch_max_reports: 4
+  batch_max_chars: 260000
+  triage_max_pages: 18
+  triage_max_chars: 110000
+  first_pages: 4
+  last_pages: 2
+  top_n: 10
+  deep_dive_n: 10
+  min_deep_dive_score: 65
+  run_qc: true
+  archive_after_success: false
+  reuse_existing_cards: true
+  reuse_existing_deep_dives: true
+  output_html: true
+  excerpt_keywords:
+    - "投资要点"
+    - "核心观点"
+    - "摘要"
+    - "结论"
+    - "盈利预测"
+    - "业绩预测"
+    - "目标价"
+    - "评级"
+    - "估值"
+    - "风险"
+    - "催化"
+
+scoring:
+  watchlist_relevance: 20
+  novelty: 20
+  earnings_valuation_impact: 15
+  catalyst_certainty: 15
+  consensus_divergence: 10
+  evidence_quality: 10
+  actionability: 10
+  duplicate_penalty_max: 25
+  stale_penalty_max: 15
+  unverified_penalty_max: 15
+  holding_negative_boost: 10
+
+output:
+  markdown_max_core_chars: 280
+  include_source_paths: true
+  csv_encoding: "utf-8-sig"
+
+automation:
+  schedules:
+    - "09:00"
+    - "21:00"
+  catchup_hours: 4
+  poll_interval_seconds: 600

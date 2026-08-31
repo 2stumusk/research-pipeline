@@ -1,0 +1,37 @@
+A股研报智能筛选系统 0.1.1
+
+入口
+- run.sh                         运行 09:00/21:00 流水线
+- scripts/install_macos.sh       macOS 初始化
+- QUICKSTART.md                  快速启动
+- README.md                      完整说明
+- BUILD_NOTES.md                 构建与验收记录
+
+研究规则与提示
+- AGENTS.md
+- .agents/skills/*/SKILL.md       6 个 Codex Skills
+- prompts/*.md                    5 个阶段提示词
+- schemas/*.json                  5 份严格 JSON Schema
+
+程序
+- research_pipeline/             Python 主程序
+- config/config.yaml             主配置
+- config/watchlist.csv           观察池示例
+- config.local.example.yaml      本地覆盖模板
+
+自动化
+- scripts/install_launchd.sh
+- scripts/uninstall_launchd.sh
+- scripts/scheduler_tick.sh
+
+验证与预览
+- tests/                         21 项单元/集成测试
+- sample_output/                 虚构数据生成的完整示例输出
+
+运行时目录
+- inbox/                         放入 YYYY-MM-DD 下的 PDF
+- extracted/                     提取文本和页码
+- database/                      SQLite
+- outputs/                       日报与仪表盘
+- logs/                          运行日志
+- archive/                       可选归档

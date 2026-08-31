@@ -1,0 +1,12 @@
+{
+  "run_id": "demo",
+  "run_date": "2026-08-21",
+  "session": "0900",
+  "started_at": "2026-08-21T01:00:00+00:00",
+  "completed_at": "2026-08-21T01:10:00+00:00",
+  "report_count": 5,
+  "cluster_count": 3,
+  "deep_dive_count": 1,
+  "dry_run": true,
+  "errors": []
+}

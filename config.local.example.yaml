@@ -1,0 +1,22 @@
+# 复制为 config.local.yaml 后，只写需要覆盖的配置。
+# 该文件已被 .gitignore 忽略。
+
+codex:
+  max_parallel: 3
+  timeout_seconds: 1800
+  isolate_runtime_workspace: true
+  # models:
+  #   triage: ""
+  #   synthesis: ""
+  #   deep_dive: ""
+  #   qc: ""
+
+pipeline:
+  top_n: 10
+  deep_dive_n: 10
+  min_deep_dive_score: 65
+  archive_after_success: false
+  # 省成本可改为 deep_dive_n: 6；研究加强版可改为 12。
+
+automation:
+  poll_interval_seconds: 600

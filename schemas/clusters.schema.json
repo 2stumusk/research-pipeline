@@ -1,0 +1,162 @@
+{
+  "type": "object",
+  "properties": {
+    "clusters": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "cluster_id": {
+            "type": "string"
+          },
+          "event_title": {
+            "type": "string"
+          },
+          "event_date": {
+            "type": "string"
+          },
+          "primary_theme": {
+            "type": "string"
+          },
+          "companies": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "report_ids": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "consensus_points": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "disagreements": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "topic": {
+                  "type": "string"
+                },
+                "positions": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "institution": {
+                        "type": "string"
+                      },
+                      "view": {
+                        "type": "string"
+                      },
+                      "report_id": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "institution",
+                      "view",
+                      "report_id"
+                    ],
+                    "additionalProperties": false
+                  }
+                },
+                "investment_relevance": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "topic",
+                "positions",
+                "investment_relevance"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "genuinely_new_information": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "best_report_id": {
+            "type": "string"
+          },
+          "best_report_reason": {
+            "type": "string"
+          },
+          "a_share_implications": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "risk_signals": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "catalyst_signals": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "cluster_importance": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 100
+          },
+          "cluster_direction": {
+            "type": "integer",
+            "minimum": -3,
+            "maximum": 3
+          },
+          "confidence": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 100
+          }
+        },
+        "required": [
+          "cluster_id",
+          "event_title",
+          "event_date",
+          "primary_theme",
+          "companies",
+          "report_ids",
+          "consensus_points",
+          "disagreements",
+          "genuinely_new_information",
+          "best_report_id",
+          "best_report_reason",
+          "a_share_implications",
+          "risk_signals",
+          "catalyst_signals",
+          "cluster_importance",
+          "cluster_direction",
+          "confidence"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "unclustered_report_ids": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  },
+  "required": [
+    "clusters",
+    "unclustered_report_ids"
+  ],
+  "additionalProperties": false
+}

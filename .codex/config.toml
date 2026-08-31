@@ -1,0 +1,7 @@
+# Project-local defaults. The runner also passes these controls explicitly.
+sandbox_mode = "read-only"
+model_reasoning_summary = "none"
+model_verbosity = "low"
+
+[tools]
+web_search = false

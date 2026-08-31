@@ -1,0 +1,140 @@
+{
+  "demo_optics_1": {
+    "report_id": "demo_optics_1",
+    "one_sentence_conclusion": "需求前移构成盈利上修，但材料供给决定兑现速度。",
+    "report_core": [
+      "1.6T量产提前",
+      "2027E盈利上修",
+      "高功率CW和EML仍短缺"
+    ],
+    "genuinely_new_information": [
+      {
+        "claim": "1.6T批量交付时间提前一个季度",
+        "page": 4,
+        "evidence_type": "institution_view",
+        "impact": "上修2027年收入可见度"
+      },
+      {
+        "claim": "高功率CW供应缺口延续至2027年上半年",
+        "page": 7,
+        "evidence_type": "management_statement",
+        "impact": "限制短期出货弹性"
+      }
+    ],
+    "key_data": [],
+    "argument_chain": [
+      {
+        "step": 1,
+        "claim": "云厂商资本开支上修",
+        "evidence": "客户订单与交付计划前移",
+        "page": 4,
+        "weakness": "订单可能因材料短缺延后"
+      },
+      {
+        "step": 2,
+        "claim": "模块收入和利润上修",
+        "evidence": "量产时间提前且产品价值量提升",
+        "page": 5,
+        "weakness": "价格下降可能抵消部分产品升级"
+      }
+    ],
+    "critical_assumptions": [
+      {
+        "assumption": "高功率CW供应按计划改善",
+        "why_it_matters": "决定出货能否兑现",
+        "failure_signal": "交付再次延后或毛利率不升",
+        "page": 7
+      }
+    ],
+    "changes_vs_prior": [
+      "2027E净利润上调10%",
+      "量产时间由2027Q1提前至2026Q4"
+    ],
+    "earnings_impact": "2027E净利润上调10%，主要来自出货提前。",
+    "valuation_impact": "目标价同时受到盈利上修和估值倍数小幅提升影响。",
+    "a_share_mapping": [
+      {
+        "company": "天孚通信",
+        "ticker": "300394",
+        "relationship": "direct",
+        "logic": "高速光器件价值量提升",
+        "confidence": 82
+      }
+    ],
+    "catalyst_timeline": [
+      {
+        "date_or_window": "2026Q4",
+        "event": "1.6T规模交付",
+        "affected_assets": [
+          "中际旭创",
+          "新易盛"
+        ],
+        "direction": 2,
+        "page": 4
+      }
+    ],
+    "risks_and_disconfirming_evidence": [
+      {
+        "risk": "光芯片和激光器供应不及预期",
+        "affected_assets": [
+          "光模块链"
+        ],
+        "severity": "high",
+        "page": 7
+      }
+    ],
+    "failure_conditions": [
+      "1.6T客户部署延后",
+      "高功率光源良率未改善",
+      "价格下降快于成本下降"
+    ],
+    "scenarios": [
+      {
+        "name": "bull",
+        "conditions": [
+          "量产按期且材料缓解"
+        ],
+        "earnings_impact": "盈利进一步上修",
+        "valuation_impact": "高估值维持",
+        "asset_implication": "龙头与上游器件共同受益",
+        "probability": 25
+      },
+      {
+        "name": "base",
+        "conditions": [
+          "交付前移但受材料限制"
+        ],
+        "earnings_impact": "盈利按当前上修兑现",
+        "valuation_impact": "估值震荡",
+        "asset_implication": "龙头优于纯概念标的",
+        "probability": 55
+      },
+      {
+        "name": "bear",
+        "conditions": [
+          "供应瓶颈延续且价格下行"
+        ],
+        "earnings_impact": "盈利下修",
+        "valuation_impact": "估值压缩",
+        "asset_implication": "板块回撤",
+        "probability": 20
+      }
+    ],
+    "tracking_indicators": [
+      {
+        "indicator": "1.6T月度出货",
+        "frequency": "月度",
+        "threshold_or_signal": "持续环比增长",
+        "why_it_matters": "验证量产前移"
+      },
+      {
+        "indicator": "高功率CW交期",
+        "frequency": "月度",
+        "threshold_or_signal": "交期缩短",
+        "why_it_matters": "验证供应缓解"
+      }
+    ],
+    "final_judgment": "中期逻辑强化，但短期交易应重点监控供应瓶颈与估值消化。",
+    "confidence": 84
+  }
+}

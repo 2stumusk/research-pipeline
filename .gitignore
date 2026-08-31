@@ -1,0 +1,27 @@
+# Licensed/raw research reports and generated content
+inbox/**/*.pdf
+archive/**/*.pdf
+extracted/**
+!extracted/.gitkeep
+database/*.db
+database/*.db-*
+outputs/**
+!outputs/.gitkeep
+logs/**
+!logs/.gitkeep
+work/**
+
+# Credentials and local overrides
+.env
+config.local.yaml
+.codex/auth.json
+
+# Python/macOS
+.venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+build/
+dist/
+*.egg-info/
+.DS_Store

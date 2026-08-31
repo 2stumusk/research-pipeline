@@ -1,0 +1,407 @@
+{
+  "reports": [
+    {
+      "report_id": "demo_optics_1",
+      "institution": "示例券商A",
+      "report_date": "2026-08-21",
+      "title": "1.6T光模块需求上修与材料瓶颈",
+      "companies": [
+        {
+          "name": "中际旭创",
+          "ticker": "300308",
+          "market": "CN"
+        }
+      ],
+      "primary_industry": "光通信",
+      "themes": [
+        "1.6T",
+        "光模块",
+        "AI资本开支"
+      ],
+      "report_type": "industry_update",
+      "rating": {
+        "current": "买入",
+        "previous": "买入",
+        "change": "maintain"
+      },
+      "target_price": {
+        "current": 180.0,
+        "previous": 165.0,
+        "currency": "CNY",
+        "change_pct": 9.1
+      },
+      "core_conclusion": "需求上修主要来自交付节奏前移，但高功率CW与EML供应仍是收入兑现的关键约束。",
+      "new_information": [
+        {
+          "claim": "1.6T批量交付时间提前一个季度",
+          "page": 4,
+          "evidence_type": "institution_view",
+          "impact": "上修2027年收入可见度"
+        },
+        {
+          "claim": "高功率CW供应缺口延续至2027年上半年",
+          "page": 7,
+          "evidence_type": "management_statement",
+          "impact": "限制短期出货弹性"
+        }
+      ],
+      "key_metrics": [],
+      "estimate_changes": [
+        {
+          "metric": "净利润",
+          "period": "2027E",
+          "old_value": 90.0,
+          "new_value": 99.0,
+          "unit": "亿元",
+          "change_pct": 10.0,
+          "page": 5
+        }
+      ],
+      "catalysts": [
+        {
+          "date_or_window": "2026Q4",
+          "event": "1.6T规模交付",
+          "affected_assets": [
+            "中际旭创",
+            "新易盛"
+          ],
+          "direction": 2,
+          "page": 4
+        }
+      ],
+      "risks": [
+        {
+          "risk": "光芯片和激光器供应不及预期",
+          "affected_assets": [
+            "光模块链"
+          ],
+          "severity": "high",
+          "page": 7
+        }
+      ],
+      "a_share_mapping": [
+        {
+          "company": "天孚通信",
+          "ticker": "300394",
+          "relationship": "direct",
+          "logic": "高速光器件价值量提升",
+          "confidence": 82
+        }
+      ],
+      "delta_from_prior": [
+        "2027E净利润上调10%",
+        "量产时间由2027Q1提前至2026Q4"
+      ],
+      "evidence_gaps": [],
+      "score_components": {
+        "watchlist_relevance": 20,
+        "novelty": 18,
+        "earnings_valuation_impact": 14,
+        "catalyst_certainty": 13,
+        "consensus_divergence": 7,
+        "evidence_quality": 8,
+        "actionability": 9,
+        "duplicate_penalty": 0,
+        "stale_penalty": 0,
+        "unverified_penalty": 2
+      },
+      "importance_score": 87,
+      "priority_score": 87,
+      "direction_score": 2,
+      "confidence_score": 84,
+      "recommended_action": "must_read_full",
+      "source_pages_used": [
+        4,
+        5,
+        7
+      ],
+      "duplicate_hint": "",
+      "watchlist_matches": [],
+      "event_title": "1.6T交付前移与材料约束",
+      "source_file": "",
+      "scanned_pages": []
+    },
+    {
+      "report_id": "demo_memory_1",
+      "institution": "示例券商B",
+      "report_date": "2026-08-21",
+      "title": "HBM4需求强劲但先进封装良率决定供给",
+      "companies": [
+        {
+          "name": "SK海力士",
+          "ticker": "000660.KS",
+          "market": "KR"
+        }
+      ],
+      "primary_industry": "存储",
+      "themes": [
+        "HBM4",
+        "DRAM",
+        "先进封装"
+      ],
+      "report_type": "company_update",
+      "rating": {
+        "current": "买入",
+        "previous": "买入",
+        "change": "maintain"
+      },
+      "target_price": {
+        "current": 520000,
+        "previous": 500000,
+        "currency": "KRW",
+        "change_pct": 4.0
+      },
+      "core_conclusion": "需求并非主要矛盾，供给弹性取决于TSV、键合和良率爬坡，价格维持强势。",
+      "new_information": [
+        {
+          "claim": "HBM4良率爬坡慢于晶圆投入增长",
+          "page": 6,
+          "evidence_type": "institution_view",
+          "impact": "支持价格和毛利率"
+        }
+      ],
+      "key_metrics": [],
+      "estimate_changes": [],
+      "catalysts": [
+        {
+          "date_or_window": "未来一季",
+          "event": "客户认证更新",
+          "affected_assets": [
+            "HBM供应链"
+          ],
+          "direction": 2,
+          "page": 8
+        }
+      ],
+      "risks": [
+        {
+          "risk": "竞争对手认证进度快于预期",
+          "affected_assets": [
+            "SK海力士"
+          ],
+          "severity": "medium",
+          "page": 9
+        }
+      ],
+      "a_share_mapping": [
+        {
+          "company": "通富微电",
+          "ticker": "002156",
+          "relationship": "indirect",
+          "logic": "先进封装景气映射",
+          "confidence": 55
+        }
+      ],
+      "delta_from_prior": [
+        "供给约束由晶圆产能转向封装良率"
+      ],
+      "evidence_gaps": [],
+      "score_components": {},
+      "importance_score": 78,
+      "priority_score": 78,
+      "direction_score": 2,
+      "confidence_score": 80,
+      "recommended_action": "read_summary",
+      "source_pages_used": [
+        6,
+        8,
+        9
+      ],
+      "duplicate_hint": "",
+      "watchlist_matches": [],
+      "event_title": "HBM4供给约束",
+      "source_file": "",
+      "scanned_pages": []
+    },
+    {
+      "report_id": "demo_macro_1",
+      "institution": "示例券商C",
+      "report_date": "2026-08-21",
+      "title": "日元利差交易波动风险上升",
+      "companies": [],
+      "primary_industry": "宏观",
+      "themes": [
+        "日元",
+        "利差交易",
+        "全球流动性"
+      ],
+      "report_type": "macro",
+      "rating": {
+        "current": "",
+        "previous": "",
+        "change": "unknown"
+      },
+      "target_price": {
+        "current": null,
+        "previous": null,
+        "currency": "",
+        "change_pct": null
+      },
+      "core_conclusion": "日本政策预期与美债波动叠加，可能造成全球科技资产风险预算阶段性收缩。",
+      "new_information": [
+        {
+          "claim": "日元波动率和跨币种基差同步走高",
+          "page": 3,
+          "evidence_type": "reported_fact",
+          "impact": "提升去杠杆风险"
+        }
+      ],
+      "key_metrics": [],
+      "estimate_changes": [],
+      "catalysts": [],
+      "risks": [
+        {
+          "risk": "日元快速升值触发carry unwind",
+          "affected_assets": [
+            "全球科技股"
+          ],
+          "severity": "critical",
+          "page": 5
+        }
+      ],
+      "a_share_mapping": [
+        {
+          "company": "A股科技成长",
+          "ticker": "",
+          "relationship": "negative",
+          "logic": "海外风险预算收缩可能压制估值",
+          "confidence": 70
+        }
+      ],
+      "delta_from_prior": [
+        "风险权重由美联储转向日本政策与日元波动"
+      ],
+      "evidence_gaps": [],
+      "score_components": {},
+      "importance_score": 82,
+      "priority_score": 82,
+      "direction_score": -2,
+      "confidence_score": 76,
+      "recommended_action": "must_read_full",
+      "source_pages_used": [
+        3,
+        5
+      ],
+      "duplicate_hint": "",
+      "watchlist_matches": [],
+      "event_title": "日元carry风险",
+      "source_file": "",
+      "scanned_pages": []
+    },
+    {
+      "report_id": "demo_pcb_1",
+      "institution": "示例券商D",
+      "report_date": "2026-08-21",
+      "title": "AI PCB高阶材料需求延续",
+      "companies": [
+        {
+          "name": "生益科技",
+          "ticker": "600183",
+          "market": "CN"
+        }
+      ],
+      "primary_industry": "PCB/CCL",
+      "themes": [
+        "M8",
+        "HVLP",
+        "AI服务器"
+      ],
+      "report_type": "company_update",
+      "rating": {
+        "current": "买入",
+        "previous": "买入",
+        "change": "maintain"
+      },
+      "target_price": {
+        "current": 55,
+        "previous": 50,
+        "currency": "CNY",
+        "change_pct": 10
+      },
+      "core_conclusion": "产品结构改善延续，但市场已部分计价，新增信息主要是产线良率改善。",
+      "new_information": [
+        {
+          "claim": "高阶材料良率继续改善",
+          "page": 5,
+          "evidence_type": "management_statement",
+          "impact": "支撑毛利率"
+        }
+      ],
+      "key_metrics": [],
+      "estimate_changes": [],
+      "catalysts": [],
+      "risks": [],
+      "a_share_mapping": [],
+      "delta_from_prior": [
+        "盈利预测未上修，目标价主要来自估值倍数"
+      ],
+      "evidence_gaps": [],
+      "score_components": {},
+      "importance_score": 68,
+      "priority_score": 68,
+      "direction_score": 1,
+      "confidence_score": 73,
+      "recommended_action": "read_summary",
+      "source_pages_used": [
+        5
+      ],
+      "duplicate_hint": "",
+      "watchlist_matches": [],
+      "event_title": "AI PCB材料升级",
+      "source_file": "",
+      "scanned_pages": []
+    },
+    {
+      "report_id": "demo_repeat_1",
+      "institution": "示例券商E",
+      "report_date": "2026-08-21",
+      "title": "重复事件简评",
+      "companies": [
+        {
+          "name": "中际旭创",
+          "ticker": "300308",
+          "market": "CN"
+        }
+      ],
+      "primary_industry": "光通信",
+      "themes": [
+        "1.6T"
+      ],
+      "report_type": "event_comment",
+      "rating": {
+        "current": "买入",
+        "previous": "买入",
+        "change": "maintain"
+      },
+      "target_price": {
+        "current": 178,
+        "previous": 170,
+        "currency": "CNY",
+        "change_pct": 4.7
+      },
+      "core_conclusion": "观点与市场共识接近，缺乏新增数据。",
+      "new_information": [],
+      "key_metrics": [],
+      "estimate_changes": [],
+      "catalysts": [],
+      "risks": [],
+      "a_share_mapping": [],
+      "delta_from_prior": [],
+      "evidence_gaps": [
+        "缺乏新增一手证据"
+      ],
+      "score_components": {},
+      "importance_score": 42,
+      "priority_score": 42,
+      "direction_score": 1,
+      "confidence_score": 60,
+      "recommended_action": "index_only",
+      "source_pages_used": [],
+      "duplicate_hint": "与demo_optics_1高度重复",
+      "watchlist_matches": [],
+      "event_title": "1.6T交付前移与材料约束",
+      "source_file": "",
+      "scanned_pages": []
+    }
+  ]
+}

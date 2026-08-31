@@ -1,0 +1,2 @@
+此文件仅说明 LaunchAgent 名称。请运行 scripts/install_launchd.sh，由脚本根据实际项目路径生成：
+~/Library/LaunchAgents/com.musk.a-share-research.plist

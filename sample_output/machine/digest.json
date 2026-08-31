@@ -1,0 +1,88 @@
+{
+  "executive_view": "今日增量信息集中在AI硬件交付前移与全球流动性风险上升：基本面仍强，但短期风险预算可能因日元carry波动收缩。",
+  "top_changes": [
+    {
+      "title": "1.6T交付节奏前移",
+      "why_it_matters": "提高2027年收入可见度，但材料瓶颈限制短期弹性。",
+      "affected_assets": [
+        "中际旭创",
+        "新易盛",
+        "天孚通信"
+      ],
+      "direction": 2,
+      "confidence": 84,
+      "report_ids": [
+        "demo_optics_1"
+      ]
+    },
+    {
+      "title": "HBM4供给约束转向封装良率",
+      "why_it_matters": "价格和毛利率支撑强于单纯晶圆扩产逻辑。",
+      "affected_assets": [
+        "SK海力士",
+        "先进封装链"
+      ],
+      "direction": 2,
+      "confidence": 80,
+      "report_ids": [
+        "demo_memory_1"
+      ]
+    },
+    {
+      "title": "日元carry去杠杆风险抬升",
+      "why_it_matters": "可能压缩全球科技资产风险预算。",
+      "affected_assets": [
+        "A股科技成长",
+        "全球科技股"
+      ],
+      "direction": -2,
+      "confidence": 76,
+      "report_ids": [
+        "demo_macro_1"
+      ]
+    }
+  ],
+  "risk_alerts": [
+    {
+      "title": "日元快速升值触发去杠杆",
+      "why_it_matters": "流动性冲击可能先于基本面反映。",
+      "affected_assets": [
+        "全球科技股"
+      ],
+      "direction": -2,
+      "confidence": 76,
+      "report_ids": [
+        "demo_macro_1"
+      ]
+    }
+  ],
+  "earnings_upgrades": [
+    {
+      "company": "中际旭创",
+      "ticker": "300308",
+      "metric": "净利润",
+      "period": "2027E",
+      "change": "+10.0%",
+      "report_id": "demo_optics_1"
+    }
+  ],
+  "earnings_downgrades": [],
+  "biggest_disagreements": [
+    "1.6T量产提前幅度及高功率CW供应缓解时间"
+  ],
+  "watchlist_relevance": [
+    "中际旭创：交付前移但材料约束仍在",
+    "生益科技：目标价上调主要来自估值而非盈利"
+  ],
+  "next_7d_catalysts": [],
+  "reading_order": [
+    "demo_optics_1",
+    "demo_macro_1",
+    "demo_memory_1",
+    "demo_pcb_1",
+    "demo_repeat_1"
+  ],
+  "data_gaps": [
+    "高功率CW实际扩产和良率数据仍需验证"
+  ]
+}

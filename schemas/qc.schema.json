@@ -1,0 +1,71 @@
+{
+  "type": "object",
+  "properties": {
+    "passed": {
+      "type": "boolean"
+    },
+    "summary": {
+      "type": "string"
+    },
+    "issues": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "severity": {
+            "type": "string",
+            "enum": [
+              "info",
+              "warning",
+              "high",
+              "critical"
+            ]
+          },
+          "category": {
+            "type": "string",
+            "enum": [
+              "number",
+              "unit",
+              "currency",
+              "date",
+              "ticker",
+              "page",
+              "fact_inference",
+              "logic",
+              "missing_evidence",
+              "format",
+              "other"
+            ]
+          },
+          "report_id": {
+            "type": "string"
+          },
+          "file": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string"
+          },
+          "suggested_action": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "severity",
+          "category",
+          "report_id",
+          "file",
+          "message",
+          "suggested_action"
+        ],
+        "additionalProperties": false
+      }
+    }
+  },
+  "required": [
+    "passed",
+    "summary",
+    "issues"
+  ],
+  "additionalProperties": false
+}

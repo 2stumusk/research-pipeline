@@ -1,0 +1,117 @@
+{
+  "clusters": [
+    {
+      "cluster_id": "demo_cluster_1",
+      "event_title": "1.6T交付前移与材料约束",
+      "event_date": "2026-08-21",
+      "primary_theme": "光通信",
+      "companies": [
+        "中际旭创"
+      ],
+      "report_ids": [
+        "demo_optics_1",
+        "demo_repeat_1"
+      ],
+      "consensus_points": [
+        "1.6T需求保持强劲",
+        "材料供给限制短期出货"
+      ],
+      "disagreements": [
+        {
+          "topic": "量产提前幅度",
+          "positions": [
+            {
+              "institution": "示例券商A",
+              "view": "提前一个季度",
+              "report_id": "demo_optics_1"
+            },
+            {
+              "institution": "示例券商E",
+              "view": "未给出明确时间",
+              "report_id": "demo_repeat_1"
+            }
+          ],
+          "investment_relevance": "决定2027年盈利上修幅度"
+        }
+      ],
+      "genuinely_new_information": [
+        "高功率CW供应缺口延续至2027年上半年"
+      ],
+      "best_report_id": "demo_optics_1",
+      "best_report_reason": "新增数据和页码最完整",
+      "a_share_implications": [
+        "光模块龙头收入可见度提升",
+        "上游高功率光源仍是瓶颈"
+      ],
+      "risk_signals": [
+        "材料供应不足"
+      ],
+      "catalyst_signals": [
+        "2026Q4规模交付"
+      ],
+      "cluster_importance": 90,
+      "cluster_direction": 2,
+      "confidence": 84
+    },
+    {
+      "cluster_id": "demo_cluster_2",
+      "event_title": "HBM4供给约束",
+      "event_date": "2026-08-21",
+      "primary_theme": "HBM",
+      "companies": [
+        "SK海力士"
+      ],
+      "report_ids": [
+        "demo_memory_1"
+      ],
+      "consensus_points": [
+        "需求强劲，供给由封装良率决定"
+      ],
+      "disagreements": [],
+      "genuinely_new_information": [
+        "良率成为主要约束"
+      ],
+      "best_report_id": "demo_memory_1",
+      "best_report_reason": "唯一报告",
+      "a_share_implications": [
+        "先进封装景气维持"
+      ],
+      "risk_signals": [],
+      "catalyst_signals": [
+        "客户认证"
+      ],
+      "cluster_importance": 78,
+      "cluster_direction": 2,
+      "confidence": 80
+    },
+    {
+      "cluster_id": "demo_cluster_3",
+      "event_title": "日元carry风险",
+      "event_date": "2026-08-21",
+      "primary_theme": "全球流动性",
+      "companies": [],
+      "report_ids": [
+        "demo_macro_1"
+      ],
+      "consensus_points": [
+        "日元波动可能触发去杠杆"
+      ],
+      "disagreements": [],
+      "genuinely_new_information": [
+        "跨币种基差同步走高"
+      ],
+      "best_report_id": "demo_macro_1",
+      "best_report_reason": "唯一报告",
+      "a_share_implications": [
+        "科技成长估值可能受压"
+      ],
+      "risk_signals": [
+        "carry unwind"
+      ],
+      "catalyst_signals": [],
+      "cluster_importance": 82,
+      "cluster_direction": -2,
+      "confidence": 76
+    }
+  ]
+}
