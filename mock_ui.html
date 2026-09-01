@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Research Pipeline - Web Dashboard</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .header {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            color: #667eea;
+            font-size: 32px;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            color: #666;
+            font-size: 16px;
+        }
+
+        .main-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .card {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+        }
+
+        .card h2 {
+            color: #333;
+            font-size: 20px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .upload-area {
+            border: 3px dashed #ddd;
+            border-radius: 10px;
+            padding: 60px 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .upload-area:hover {
+            border-color: #667eea;
+            background: #f8f9ff;
+        }
+
+        .upload-area.drag-over {
+            border-color: #667eea;
+            background: #f0f4ff;
+        }
+
+        .upload-icon {
+            font-size: 48px;
+            margin-bottom: 15px;
+        }
+
+        .upload-text {
+            color: #666;
+            font-size: 16px;
+        }
+
+        .config-row {
+            margin-bottom: 20px;
+        }
+
+        .config-row label {
+            display: block;
+            color: #555;
+            font-size: 14px;
+            font-weight: 500;
+            margin-bottom: 8px;
+        }
+
+        .config-row select,
+        .config-row input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 14px;
+            transition: border 0.3s;
+        }
+
+        .config-row select:focus,
+        .config-row input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .btn {
+            padding: 14px 30px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-secondary {
+            background: #f0f0f0;
+            color: #333;
+        }
+
+        .btn-secondary:hover {
+            background: #e0e0e0;
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 15px;
+            margin-top: 25px;
+        }
+
+        .status-box {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+        }
+
+        .status-box h3 {
+            color: #333;
+            font-size: 16px;
+            margin-bottom: 15px;
+        }
+
+        .progress-bar {
+            height: 8px;
+            background: #e0e0e0;
+            border-radius: 10px;
+            overflow: hidden;
+            margin-bottom: 15px;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+            width: 0%;
+            transition: width 0.3s;
+        }
+
+        .log-output {
+            background: #2d3748;
+            color: #e2e8f0;
+            padding: 15px;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            font-size: 13px;
+            max-height: 200px;
+            overflow-y: auto;
+            line-height: 1.6;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+        }
+
+        .stat-card {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 32px;
+            font-weight: bold;
+            color: #667eea;
+            margin-bottom: 5px;
+        }
+
+        .stat-label {
+            color: #666;
+            font-size: 14px;
+        }
+
+        .alert {
+            padding: 15px 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .alert-info {
+            background: #e3f2fd;
+            color: #1976d2;
+        }
+
+        .alert-success {
+            background: #e8f5e9;
+            color: #388e3c;
+        }
+
+        .file-list {
+            list-style: none;
+            margin-top: 15px;
+        }
+
+        .file-item {
+            background: #f8f9fa;
+            padding: 12px 15px;
+            border-radius: 8px;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .file-name {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .file-remove {
+            color: #dc3545;
+            cursor: pointer;
+            font-size: 18px;
+        }
+
+        .full-width {
+            grid-column: 1 / -1;
+        }
+
+        @media (max-width: 768px) {
+            .main-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- 顶部标题 -->
+        <div class="header">
+            <h1>📊 Research Pipeline</h1>
+            <p>智能研报分析系统 - Mock UI 预览版</p>
+        </div>
+
+        <!-- 提示信息 -->
+        <div class="alert alert-info">
+            <span style="font-size: 20px;">💡</span>
+            <div>
+                <strong>这是 Mock UI 预览</strong><br>
+                展示界面效果，实际功能需要运行 gui_launcher.py 或 web_dashboard.py
+            </div>
+        </div>
+
+        <!-- 主要功能区 -->
+        <div class="main-grid">
+            <!-- 上传区域 -->
+            <div class="card">
+                <h2><span>📁</span> 上传研报</h2>
+                <div class="upload-area" id="uploadArea">
+                    <div class="upload-icon">📄</div>
+                    <div class="upload-text">
+                        <strong>拖拽 PDF 文件到这里</strong><br>
+                        或点击选择文件
+                    </div>
+                </div>
+                <ul class="file-list" id="fileList" style="display: none;">
+                    <!-- 文件列表动态生成 -->
+                </ul>
+            </div>
+
+            <!-- 配置区域 -->
+            <div class="card">
+                <h2><span>⚙️</span> 配置</h2>
+                <div class="config-row">
+                    <label>LLM Provider</label>
+                    <select id="providerSelect">
+                        <option value="mock">Mock (无需 API Key)</option>
+                        <option value="claude">Claude</option>
+                        <option value="openai">OpenAI</option>
+                    </select>
+                </div>
+                <div class="config-row" id="apiKeyRow" style="display: none;">
+                    <label>API Key</label>
+                    <input type="password" placeholder="输入 API Key">
+                </div>
+                <div class="config-row">
+                    <label>深度分析数量</label>
+                    <input type="number" value="10" min="0" max="20">
+                </div>
+                <div class="btn-group">
+                    <button class="btn btn-primary" onclick="startAnalysis()">
+                        <span>🚀</span> 开始分析
+                    </button>
+                    <button class="btn btn-secondary" onclick="viewResults()">
+                        <span>📊</span> 查看结果
+                    </button>
+                </div>
+            </div>
+
+            <!-- 统计信息 -->
+            <div class="card full-width">
+                <h2><span>📈</span> 统计信息</h2>
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-number" id="totalReports">0</div>
+                        <div class="stat-label">今日研报</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number" id="topReports">0</div>
+                        <div class="stat-label">Top 必读</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number" id="estimatedCost">$0.00</div>
+                        <div class="stat-label">预估成本</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 运行状态 -->
+            <div class="card full-width">
+                <h2><span>⚡</span> 运行状态</h2>
+                <div class="status-box">
+                    <h3>进度: <span id="progressText">就绪</span></h3>
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="progressFill"></div>
+                    </div>
+                    <div class="log-output" id="logOutput">
+<span style="color: #48bb78;">●</span> 系统就绪
+<span style="color: #4299e1;">ℹ</span> 当前模式: Mock (无需 API Key)
+<span style="color: #4299e1;">ℹ</span> 上传 PDF 文件开始分析
+<span style="color: #4299e1;">ℹ</span> 或运行: python gui_launcher.py
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Mock 数据
+        let files = [];
+
+        // Provider 切换
+        document.getElementById('providerSelect').addEventListener('change', function() {
+            const apiKeyRow = document.getElementById('apiKeyRow');
+            if (this.value === 'mock') {
+                apiKeyRow.style.display = 'none';
+            } else {
+                apiKeyRow.style.display = 'block';
+            }
+        });
+
+        // 拖拽上传
+        const uploadArea = document.getElementById('uploadArea');
+
+        uploadArea.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            uploadArea.classList.add('drag-over');
+        });
+
+        uploadArea.addEventListener('dragleave', () => {
+            uploadArea.classList.remove('drag-over');
+        });
+
+        uploadArea.addEventListener('drop', (e) => {
+            e.preventDefault();
+            uploadArea.classList.remove('drag-over');
+
+            const droppedFiles = Array.from(e.dataTransfer.files).filter(f => f.name.endsWith('.pdf'));
+            files = files.concat(droppedFiles);
+            updateFileList();
+            updateStats();
+        });
+
+        uploadArea.addEventListener('click', () => {
+            const input = document.createElement('input');
+            input.type = 'file';
+            input.accept = '.pdf';
+            input.multiple = true;
+            input.onchange = (e) => {
+                files = files.concat(Array.from(e.target.files));
+                updateFileList();
+                updateStats();
+            };
+            input.click();
+        });
+
+        function updateFileList() {
+            const fileList = document.getElementById('fileList');
+            if (files.length === 0) {
+                fileList.style.display = 'none';
+                return;
+            }
+
+            fileList.style.display = 'block';
+            fileList.innerHTML = files.map((file, index) => `
+                <li class="file-item">
+                    <div class="file-name">
+                        <span>📄</span>
+                        <span>${file.name}</span>
+                    </div>
+                    <span class="file-remove" onclick="removeFile(${index})">✕</span>
+                </li>
+            `).join('');
+        }
+
+        function removeFile(index) {
+            files.splice(index, 1);
+            updateFileList();
+            updateStats();
+        }
+
+        function updateStats() {
+            document.getElementById('totalReports').textContent = files.length;
+            document.getElementById('topReports').textContent = Math.min(10, files.length);
+
+            const provider = document.getElementById('providerSelect').value;
+            let cost = 0;
+            if (provider === 'claude') {
+                cost = files.length * 0.15;
+            } else if (provider === 'openai') {
+                cost = files.length * 0.12;
+            }
+            document.getElementById('estimatedCost').textContent = '$' + cost.toFixed(2);
+        }
+
+        function startAnalysis() {
+            if (files.length === 0) {
+                alert('请先上传 PDF 文件');
+                return;
+            }
+
+            const logOutput = document.getElementById('logOutput');
+            const progressText = document.getElementById('progressText');
+            const progressFill = document.getElementById('progressFill');
+
+            logOutput.innerHTML = '';
+
+            const logs = [
+                { text: '🚀 开始分析...', color: '#48bb78' },
+                { text: `📁 找到 ${files.length} 个 PDF 文件`, color: '#4299e1' },
+                { text: '🔍 提取文本内容...', color: '#4299e1' },
+                { text: '🤖 LLM 初筛评分...', color: '#4299e1' },
+                { text: '📊 事件聚类...', color: '#4299e1' },
+                { text: '🏆 筛选 Top 10...', color: '#4299e1' },
+                { text: '📝 深度分析...', color: '#4299e1' },
+                { text: '✅ 分析完成！', color: '#48bb78' },
+                { text: '📂 输出目录: outputs/demo/', color: '#4299e1' }
+            ];
+
+            let i = 0;
+            const interval = setInterval(() => {
+                if (i < logs.length) {
+                    const log = logs[i];
+                    logOutput.innerHTML += `<div><span style="color: ${log.color};">●</span> ${log.text}</div>`;
+                    logOutput.scrollTop = logOutput.scrollHeight;
+
+                    const progress = ((i + 1) / logs.length) * 100;
+                    progressFill.style.width = progress + '%';
+                    progressText.textContent = Math.round(progress) + '%';
+
+                    i++;
+                } else {
+                    clearInterval(interval);
+                    progressText.textContent = '完成 ✅';
+                }
+            }, 800);
+        }
+
+        function viewResults() {
+            alert('📊 在实际应用中，这里会打开 dashboard.html\n\n运行实际程序：\npython gui_launcher.py');
+        }
+    </script>
+</body>
+</html>
