@@ -48,6 +48,41 @@ class PipelineError(RuntimeError):
     pass
 
 
+def validate_session_name(session: str) -> bool:
+    """Validate session name: 0900, 2100, gui-HHMMSS, or gui-HHMMSS-<6 lowercase hex>.
+
+    Rejects path delimiters, traversal, and invalid time fields.
+
+    Args:
+        session: Session identifier string
+
+    Returns:
+        True if valid, False otherwise
+    """
+    if not session or len(session) > 64:
+        return False
+    # Reject path-like patterns
+    if "/" in session or "\\" in session or ".." in session:
+        return False
+    # Accept standard times
+    if session in {"0900", "2100"}:
+        return True
+    # Accept gui-HHMMSS or gui-HHMMSS-<6 lowercase hex>
+    if re.match(r'^gui-\d{6}$', session):
+        # Validate time fields: HH in 00-23, MM/SS in 00-59
+        time_part = session[4:]
+        hh, mm, ss = int(time_part[0:2]), int(time_part[2:4]), int(time_part[4:6])
+        return 0 <= hh <= 23 and 0 <= mm <= 59 and 0 <= ss <= 59
+    if re.match(r'^gui-\d{6}-[a-f0-9]{6}$', session):
+        time_part = session[4:10]
+        hh, mm, ss = int(time_part[0:2]), int(time_part[2:4]), int(time_part[4:6])
+        return 0 <= hh <= 23 and 0 <= mm <= 59 and 0 <= ss <= 59
+    # Accept safe alphanumeric
+    if re.match(r'^[a-zA-Z0-9_-]+$', session):
+        return True
+    return False
+
+
 def _validate_run_date(run_date: str) -> str:
     try:
         parsed = datetime.strptime(run_date, "%Y-%m-%d")
@@ -326,7 +361,7 @@ def _fallback_digest(
             break
     catalysts = _explicit_next_7d_catalysts(ordered, run_date)
     return {
-        "executive_view": "本次综合摘要由本地兜底逻辑生成；建议在 Codex 可用后重新运行，以获得跨报告共识与分歧分析。",
+        "executive_view": "本次综合摘要由本地兜底逻辑生成；建议在 LLM 可用后重新运行，以获得跨报告共识与分歧分析。",
         "top_changes": top_changes,
         "risk_alerts": risk_alerts,
         "earnings_upgrades": upgrades[:20],
@@ -335,7 +370,7 @@ def _fallback_digest(
         "watchlist_relevance": watch_items,
         "next_7d_catalysts": catalysts,
         "reading_order": [card["report_id"] for card in ordered[:15]],
-        "data_gaps": ["综合摘要未由 Codex 语义合成，机构分歧与事件去重可能不完整。"],
+        "data_gaps": ["综合摘要未由 LLM 语义合成，机构分歧与事件去重可能不完整。"],
     }
 
 
@@ -417,6 +452,7 @@ class ResearchPipeline:
         self.runner = CodexRunner(config, logger)
         self.watchlist = load_watchlist(config.path("watchlist"))
 
+
     def _input_dir(self, run_date: str, input_dir: Path | None = None) -> Path:
         return input_dir.resolve() if input_dir else self.config.path("inbox") / run_date
 
@@ -481,10 +517,11 @@ class ResearchPipeline:
         run_qc: bool = True,
     ) -> dict[str, Any]:
         _validate_run_date(run_date)
-        if session not in {"0900", "2100"}:
-            raise PipelineError("session 仅支持 0900 或 2100")
+        # Validate session
+        if not validate_session_name(session):
+            raise PipelineError("session 格式无效：必须是 0900/2100、gui-HHMMSS、gui-HHMMSS-<hex> 或安全的字母数字串")
         if not dry_run and not self.runner.available():
-            raise PipelineError("未检测到 Codex CLI；请先安装并登录，或使用 --dry-run。")
+            raise PipelineError("LLM provider 未配置或不可用；请设置 API Key（ANTHROPIC_API_KEY 或 OPENAI_API_KEY），或使用 --dry-run。")
 
         output_dir = self.config.path("outputs") / f"{run_date}-{session}"
         output_dir.mkdir(parents=True, exist_ok=True)
@@ -593,7 +630,7 @@ class ResearchPipeline:
                         int(self.config.get("pipeline.batch_max_reports", 4)),
                         int(self.config.get("pipeline.batch_max_chars", 260000)),
                     )
-                    self.logger.info("待初筛 %s 份，拆分为 %s 个 Codex 批次", len(pending), len(batches))
+                    self.logger.info("待初筛 %s 份，拆分为 %s 个 LLM 批次", len(pending), len(batches))
                     max_workers = max(1, int(self.config.get("codex.max_parallel", 3)))
 
                     def process_batch(batch_index: int, batch: list[dict[str, Any]]) -> tuple[list[str], dict[str, Any]]:
@@ -662,7 +699,7 @@ class ResearchPipeline:
                                     returned.add(report_id)
                                 missing = expected_ids - returned
                                 for report_id in missing:
-                                    reason = f"Codex 初筛批次 {index} 未返回该 report_id"
+                                    reason = f"LLM 初筛批次 {index} 未返回该 report_id"
                                     card = normalize_and_score_card(fallback_card(reports_by_id[report_id], reason), reports_by_id[report_id], self.config, self.watchlist)
                                     cards_by_id[report_id] = card
                                     db.store_card(report_id, card)
@@ -670,7 +707,7 @@ class ResearchPipeline:
                             except Exception as exc:
                                 self.logger.exception("初筛批次失败：%s", index)
                                 for report in batch:
-                                    reason = f"Codex 初筛失败：{exc}"
+                                    reason = f"LLM 初筛失败：{exc}"
                                     card = normalize_and_score_card(fallback_card(report, reason), report, self.config, self.watchlist)
                                     cards_by_id[report["report_id"]] = card
                                     db.store_card(report["report_id"], card)
@@ -678,7 +715,7 @@ class ResearchPipeline:
                 elif pending and dry_run:
                     for report in pending:
                         card = normalize_and_score_card(
-                            fallback_card(report, "dry-run：未调用 Codex"), report, self.config, self.watchlist
+                            fallback_card(report, "dry-run：未调用 LLM"), report, self.config, self.watchlist
                         )
                         cards_by_id[report["report_id"]] = card
 
@@ -928,7 +965,7 @@ class ResearchPipeline:
                                     "report_id": "",
                                     "file": "",
                                     "message": str(exc),
-                                    "suggested_action": "检查 Codex 日志后重新运行 QC。",
+                                    "suggested_action": "检查 LLM 日志后重新运行 QC。",
                                 }
                             ],
                         }

@@ -1,27 +1,65 @@
-# Licensed/raw research reports and generated content
-inbox/**/*.pdf
-archive/**/*.pdf
-extracted/**
-!extracted/.gitkeep
-database/*.db
-database/*.db-*
-outputs/**
-!outputs/.gitkeep
-logs/**
-!logs/.gitkeep
-work/**
-
-# Credentials and local overrides
-.env
-config.local.yaml
-.codex/auth.json
-
-# Python/macOS
+# Virtual environments
 .venv/
+.venv.backup/
+venv/
+env/
+
+# Python
 __pycache__/
 *.py[cod]
-.pytest_cache/
+*$py.class
+*.so
+.Python
 build/
+develop-eggs/
 dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
 *.egg-info/
+.installed.cfg
+*.egg
+
+# IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Project specific
+database/*.db
+database/*.db-*
+logs/*.log
+logs/*.log.*
+outputs/daily/*
+outputs/demo/*
+!outputs/.gitkeep
+!logs/.gitkeep
+inbox/20*
+archive/20*
+extracted/
+*.local.yaml
+config.local.yaml
+
+# OS
 .DS_Store
+Thumbs.db
+
+# Temporary
+*.tmp
+*.temp
+.cache/
+
+# Backups
+*.backup
+*.bak
+
+# Old documentation
+README_OLD.md

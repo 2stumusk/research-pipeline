@@ -40,6 +40,7 @@ class LLMProvider(ABC):
         self,
         model: str | None = None,
         api_key: str | None = None,
+        base_url: str | None = None,
         temperature: float = 0.0,
         max_tokens: int = 4096,
         timeout: int = 120,
@@ -49,12 +50,14 @@ class LLMProvider(ABC):
         Args:
             model: Model name. If None, use provider default.
             api_key: API key. If None, will try to read from environment.
+            base_url: Custom API base URL. If None, use provider default.
             temperature: Sampling temperature (0.0 = deterministic)
             max_tokens: Maximum tokens in response
             timeout: Request timeout in seconds
         """
         self.model = model
         self.api_key = api_key
+        self.base_url = base_url
         self.temperature = temperature
         self.max_tokens = max_tokens
         self.timeout = timeout

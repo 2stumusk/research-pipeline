@@ -1,6 +1,8 @@
-"""LLM Runner - unified interface for calling LLMs with retry logic.
+"""LLM Runner - experimental direct provider construction interface.
 
-This replaces the original codex_runner.py with a provider-agnostic implementation.
+This module provides explicit construction of Claude/OpenAI providers for
+experimental use only. The formal production backend is CodexRunner.
+Direct providers must not receive production report content.
 """
 
 from __future__ import annotations
@@ -34,20 +36,31 @@ class LLMRunner:
         provider: str = "claude",
         model: str | None = None,
         api_key: str | None = None,
+        base_url: str | None = None,
         max_retries: int = 3,
         retry_delay: float = 2.0,
         timeout: int = 120,
     ):
-        """Initialize LLM runner.
+        """Initialize LLM runner (experimental direct providers only).
 
         Args:
-            provider: Provider name ("claude", "openai")
+            provider: Provider name ("claude", "openai"); "codex" is rejected
             model: Model name (optional, uses provider default if None)
             api_key: API key (optional, reads from environment if None)
+            base_url: Custom API endpoint (passed to provider construction)
             max_retries: Maximum number of retries on failure
             retry_delay: Delay between retries in seconds
             timeout: Request timeout in seconds
+
+        Raises:
+            LLMRunnerError: If provider is "codex" or initialization fails
         """
+        if provider == "codex":
+            raise LLMRunnerError(
+                "LLMRunner does not support provider='codex'. "
+                "Use CodexRunner for production Codex backend."
+            )
+
         self.provider_name = provider
         self.max_retries = max_retries
         self.retry_delay = retry_delay
@@ -57,6 +70,7 @@ class LLMRunner:
                 provider,
                 model=model,
                 api_key=api_key,
+                base_url=base_url,
                 timeout=timeout,
             )
         except ValueError as exc:
@@ -197,37 +211,31 @@ CodexError = LLMRunnerError
 
 
 def create_runner_from_config(config: dict[str, Any]) -> LLMRunner:
-    """Create LLMRunner from configuration dict.
+    """Create LLMRunner from configuration dict (experimental construction only).
 
     Args:
         config: Configuration dict with keys:
-            - provider: "claude" or "openai"
+            - provider: "claude" or "openai" (not "codex")
             - model: Model name (optional)
             - api_key_env: Environment variable name for API key (optional)
+            - base_url: Custom API endpoint (passed to provider construction)
             - max_retries: Max retries (optional, default 3)
             - timeout: Timeout in seconds (optional, default 120)
             - temperature: Temperature for sampling (optional, default 0.0)
             - max_tokens: Max tokens in response (optional, default 4096)
 
     Returns:
-        Configured LLMRunner
+        Configured LLMRunner (experimental direct provider)
 
-    Example config:
-        {
-            "provider": "claude",
-            "model": "claude-3-5-sonnet-20241022",
-            "api_key_env": "ANTHROPIC_API_KEY",
-            "max_retries": 3,
-            "timeout": 120,
-            "temperature": 0.0,
-            "max_tokens": 4096
-        }
+    Raises:
+        LLMRunnerError: If provider is "codex"
     """
     import os
 
     provider = config.get("provider", "claude")
     model = config.get("model")
     api_key_env = config.get("api_key_env")
+    base_url = config.get("base_url")
 
     # Read API key from environment if specified
     api_key = None
@@ -238,6 +246,7 @@ def create_runner_from_config(config: dict[str, Any]) -> LLMRunner:
         provider=provider,
         model=model,
         api_key=api_key,
+        base_url=base_url,
         max_retries=config.get("max_retries", 3),
         retry_delay=config.get("retry_delay", 2.0),
         timeout=config.get("timeout", 120),

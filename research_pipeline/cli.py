@@ -39,7 +39,7 @@ def build_parser() -> argparse.ArgumentParser:
 
     run = sub.add_parser("run", help="执行完整研报流水线")
     run.add_argument("--date", dest="run_date")
-    run.add_argument("--session", choices=["0900", "2100"], default="0900")
+    run.add_argument("--session", default="0900", help="会话标识（如 0900, 2100, gui-HHMMSS 等）")
     run.add_argument("--input-dir", type=Path)
     run.add_argument("--force", action="store_true")
     run.add_argument("--dry-run", action="store_true")
@@ -64,7 +64,12 @@ def doctor(config: Any, verbose: bool = False) -> int:
             checks.append({"name": f"Python模块 {module}", "ok": False, "detail": str(exc)})
 
     runner = CodexRunner(config, logger)
-    checks.append({"name": "Codex CLI", "ok": runner.available(), "detail": runner.version() or "未安装"})
+    is_available = runner.available()
+    if is_available:
+        version_info = runner.version()
+    else:
+        version_info = "可执行文件未找到或未在 PATH 中"
+    checks.append({"name": "Codex (正式生产后端)", "ok": is_available, "detail": version_info})
     checks.append({"name": "Git仓库", "ok": (config.root / ".git").exists(), "detail": str(config.root / ".git")})
 
     try:
@@ -91,7 +96,7 @@ def doctor(config: Any, verbose: bool = False) -> int:
         print(f"{mark} {item['name']}: {item['detail']}")
     failed = [item for item in checks if not item["ok"]]
     if failed:
-        print("\n存在未通过项。Codex CLI 缺失时仍可运行 demo 和 --dry-run。")
+        print("\n存在未通过项。请检查配置和依赖。")
         return 1
     print("\n全部检查通过。")
     return 0

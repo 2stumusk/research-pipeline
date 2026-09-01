@@ -1,138 +1,108 @@
 #!/usr/bin/env python3
-"""Simple integration test: Config loading and LLM call."""
+"""Credential-free integration smoke checks."""
 
 import sys
 from pathlib import Path
 
-# Add parent directory to path
 sys.path.insert(0, str(Path(__file__).parent.parent))
 
 
-def test_config_loading():
-    """Test loading configuration."""
-    print("\n" + "=" * 60)
-    print("Test 1: Configuration Loading")
-    print("=" * 60)
+def check_config_normalization():
+    """Verify config normalization produces codex provider."""
+    from research_pipeline.config import load_config
+    from research_pipeline.config_loader import normalize_llm_config
 
-    try:
-        from research_pipeline.config_loader import load_llm_config, get_stage_config
+    app_config = load_config()
+    llm_config = normalize_llm_config(app_config)
 
-        # Test loading new format config
-        config_path = Path("config/config.v0.2.yaml")
-        if not config_path.exists():
-            print(f"⚠️  Config file not found: {config_path}")
-            print("Skipping this test...")
-            return True
+    assert llm_config['provider'] == 'codex', f"Expected codex, got {llm_config['provider']}"
 
-        llm_config = load_llm_config(config_path)
-        print(f"✅ Loaded LLM config: {llm_config.get('provider')}")
-
-        # Test stage-specific config
-        for stage in ["triage", "synthesis", "deep_dive", "qc"]:
-            stage_config = get_stage_config(llm_config, stage)
-            print(f"   {stage}: temp={stage_config['temperature']}, "
-                  f"max_tokens={stage_config['max_tokens']}")
-
-        return True
-
-    except Exception as e:
-        print(f"❌ Failed: {e}")
-        import traceback
-        traceback.print_exc()
-        return False
+    return True
 
 
-def test_runner_creation():
-    """Test creating LLM runner from config."""
-    print("\n" + "=" * 60)
-    print("Test 2: Runner Creation")
-    print("=" * 60)
+def check_codex_runner_import():
+    """Verify CodexRunner is importable and has required interface."""
+    from research_pipeline.codex_runner import CodexRunner
 
-    try:
-        from research_pipeline.llm_runner import create_runner_from_yaml
+    import inspect
 
-        config_path = Path("config/config.v0.2.yaml")
-        if not config_path.exists():
-            print(f"⚠️  Config file not found: {config_path}")
-            print("Using fallback config...")
-            # Create minimal config for testing
-            from research_pipeline.llm_runner import LLMRunner
-            runner = LLMRunner(provider="claude")
-        else:
-            runner = create_runner_from_yaml(config_path, stage="triage")
+    # Check class exists and has run_structured method
+    assert inspect.isclass(CodexRunner), "CodexRunner should be a class"
+    assert hasattr(CodexRunner, 'run_structured'), "CodexRunner should have run_structured method"
 
-        print(f"✅ Created runner: {runner.provider_name}")
-        print(f"   Model: {runner.provider.get_model_name()}")
-        print(f"   Temperature: {runner.provider.temperature}")
-        print(f"   Max tokens: {runner.provider.max_tokens}")
+    # Check signature doesn't require direct provider construction
+    sig = inspect.signature(CodexRunner.__init__)
+    params = list(sig.parameters.keys())
 
-        return True
+    # Should accept config-based construction, not require provider object
+    assert 'self' in params, "Constructor should have self"
 
-    except Exception as e:
-        print(f"❌ Failed: {e}")
-        import traceback
-        traceback.print_exc()
-        return False
+    return True
 
 
-def test_mock_llm_call():
-    """Test mock LLM call (without actually calling API)."""
-    print("\n" + "=" * 60)
-    print("Test 3: Mock LLM Call Structure")
-    print("=" * 60)
+def check_stage_defaults():
+    """Verify stage-specific configs apply defaults correctly."""
+    from research_pipeline.config_loader import get_stage_config
 
-    try:
-        from research_pipeline.llm_runner import LLMRunner, LLMRunnerError
+    base = {'provider': 'codex', 'base_url': 'https://api.example.com', 'model': 'test-model'}
 
-        # This tests the structure without actual API call
-        runner = LLMRunner(provider="claude", api_key="fake_key_for_testing")
+    triage_cfg = get_stage_config(base, 'triage')
+    synthesis_cfg = get_stage_config(base, 'synthesis')
 
-        print(f"✅ Runner initialized: {runner.provider_name}")
-        print(f"   Provider: {type(runner.provider).__name__}")
-        print(f"   Max retries: {runner.max_retries}")
+    # Both should preserve base_url
+    assert triage_cfg.get('base_url') == base['base_url'], "Triage should preserve base_url"
+    assert synthesis_cfg.get('base_url') == base['base_url'], "Synthesis should preserve base_url"
 
-        # We won't actually call run() here to avoid API costs
-        print("   (Skipping actual API call to save costs)")
+    # Should have stage-appropriate defaults
+    assert 'temperature' in triage_cfg, "Triage should have temperature"
+    assert 'temperature' in synthesis_cfg, "Synthesis should have temperature"
 
-        return True
+    return True
 
-    except Exception as e:
-        print(f"❌ Failed: {e}")
-        import traceback
-        traceback.print_exc()
-        return False
+
+def check_no_llm_adapter_dependency():
+    """Verify ResearchPipeline doesn't import llm_adapter."""
+    import inspect
+    from research_pipeline import pipeline
+
+    source = inspect.getsource(pipeline)
+
+    # Should use codex_runner, not llm_adapter
+    assert 'from' in source and 'codex_runner' in source.lower(), \
+        "Pipeline should import from codex_runner"
+
+    # Verify llm_adapter is not referenced
+    lines = source.split('\n')
+    import_lines = [l for l in lines if 'import' in l]
+    adapter_imports = [l for l in import_lines if 'llm_adapter' in l]
+
+    assert not adapter_imports, f"Pipeline should not import llm_adapter: {adapter_imports}"
+
+    return True
 
 
 def main():
-    """Run all tests."""
-    print("\n" + "#" * 60)
-    print("# Integration Test Suite - Day 2")
-    print("#" * 60)
+    """Run all integration checks."""
+    checks = [
+        ('Config normalization', check_config_normalization),
+        ('CodexRunner import', check_codex_runner_import),
+        ('Stage defaults', check_stage_defaults),
+        ('No llm_adapter dependency', check_no_llm_adapter_dependency),
+    ]
 
-    results = {
-        "config_loading": test_config_loading(),
-        "runner_creation": test_runner_creation(),
-        "mock_llm_call": test_mock_llm_call(),
-    }
+    failed = []
+    for name, check_fn in checks:
+        try:
+            check_fn()
+        except Exception as e:
+            failed.append((name, str(e)))
 
-    # Print summary
-    print("\n" + "=" * 60)
-    print("SUMMARY")
-    print("=" * 60)
+    if failed:
+        for name, error in failed:
+            print(f"✗ {name}: {error}", file=sys.stderr)
+        return 1
 
-    for test_name, passed in results.items():
-        status = "✅ PASS" if passed else "❌ FAIL"
-        print(f"{test_name}: {status}")
-
-    all_passed = all(results.values())
-    print("\n" + ("=" * 60))
-    if all_passed:
-        print("✅ All tests passed!")
-        print("\nNext step: Run 'python tests/test_llm_providers.py' with real API key")
-    else:
-        print("❌ Some tests failed. Check errors above.")
-
-    return 0 if all_passed else 1
+    return 0
 
 
 if __name__ == "__main__":

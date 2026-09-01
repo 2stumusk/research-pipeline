@@ -16,7 +16,7 @@ Use the $report-triage skill.
 6. `new_information` 只写真正新增或可能改变预期的内容；普通背景知识不要充数。
 7. 所有关键数字、预测变化、风险和催化尽量给出 PDF 物理页码。无法定位时 page=null，并写入 evidence_gaps。
 8. `delta_from_prior` 必须结合 prior_cards_path；没有历史记录时明确写“无可用历史卡片，无法比较”。
-9. 严格区分 reported_fact、management_statement、institution_view、codex_inference、unverified。
+9. 严格区分 reported_fact、management_statement、institution_view、analyst_inference、unverified。
    若原文只写 `margin`/“利润率”而未说明毛利率、经营利润率或净利率，必须保留为“利润率，具体口径未披露”，不得擅自补全口径。
    若原文倍数表达（如 `2x–2.5x growth`）的基数或含义不清，必须保留原文口径并写“基数及含义未披露，暂不换算同比增速”；不得改写为“增长2–2.5倍”或“达到前期的2–2.5倍”。
    报表数字可标 `reported_fact`；对数字原因的分析若来自券商研报而非公司明确归因，必须标 `institution_view` 并写“机构认为”。

@@ -41,7 +41,12 @@ class ClaudeProvider(LLMProvider):
                     "Set it via environment variable or pass api_key parameter."
                 )
 
-            self._client = anthropic.Anthropic(api_key=api_key)
+            # Support custom base URL
+            client_kwargs = {"api_key": api_key}
+            if self.base_url:
+                client_kwargs["base_url"] = self.base_url
+
+            self._client = anthropic.Anthropic(**client_kwargs)
 
         return self._client
 
